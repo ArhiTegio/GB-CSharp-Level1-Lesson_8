@@ -25,7 +25,7 @@ namespace _2_WinBelieveUnbelievers
         }
     }
     // Класс для хранения списка вопросов. А также для сериализации в XML и десериализации из XML
-    class TrueFalse
+    public class TrueFalse
     {
         string fileName;
         List<Question> list;
@@ -36,6 +36,11 @@ namespace _2_WinBelieveUnbelievers
         public TrueFalse(string fileName)
         {
             this.fileName = fileName;
+            list = new List<Question>();
+        }
+
+        public TrueFalse()
+        {
             list = new List<Question>();
         }
         public void Add(string text, bool trueFalse)
@@ -68,6 +73,21 @@ namespace _2_WinBelieveUnbelievers
         public int Count
         {
             get { return list.Count; }
+        }
+
+        public IEnumerable<Question> GetAllQuestuon()
+        {
+            foreach (var t in list)            
+                yield return t;
+            
+            yield break;
+        }
+
+        public IEnumerable<Tuple<string, bool>> Question()
+        {
+            foreach (var n in list)            
+                yield return Tuple.Create(n.text, n.trueFalse);
+            yield break;
         }
     }
 }

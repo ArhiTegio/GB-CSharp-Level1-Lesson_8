@@ -14,6 +14,10 @@ namespace _2_WinBelieveUnbelievers
     {
         // База данных с вопросами
         TrueFalse database;
+        bool Answer = false;
+        int RightAnswer = 0;
+        int index = 0;
+
         public Form1()
         {
             InitializeComponent();
@@ -21,79 +25,89 @@ namespace _2_WinBelieveUnbelievers
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            database = new TrueFalse("quest.sv");
+            database.Load();
+            index = 0;
+            int RightAnswer = 0;
+            button1.Enabled = false;
+            button2.Enabled = false;
+            richTextBox1.Text = "";
+            richTextBox1.Enabled = false;
+        }
+
+        private void РедактироватьToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            (new Editor(database)).Show();
+            index = 0;
+            int RightAnswer = 0;
+            button1.Enabled = false;
+            button2.Enabled = false;
+            richTextBox1.Text = "";
+            richTextBox1.Enabled = false;
 
         }
 
-        // Обработчик пункта меню Exit
-        private void miExit_Click(object sender, EventArgs e)
+        private void ВыходToolStripMenuItem_Click(object sender, EventArgs e) => Application.Exit();
+
+        private void НоваяToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.Close();
+            index = 0;
+            RightAnswer = 0;
+            button1.Enabled = true;
+            button2.Enabled = true;
+            richTextBox1.Enabled = true;
+            Following();
         }
-        // Обработчик пункта меню New
-        private void miNew_Click(object sender, EventArgs e)
+
+        private void Button1_Click(object sender, EventArgs e)
         {
-            SaveFileDialog sfd = new SaveFileDialog();
-            if (sfd.ShowDialog() == DialogResult.OK)
+            if(Answer)
             {
-                database = new TrueFalse(sfd.FileName);
-                database.Add("123", true);
-                database.Save();
-                nudNumber.Minimum = 1;
-                nudNumber.Maximum = 1;
-                nudNumber.Value = 1;
-            };
-        }
-        // Обработчик события изменения значения numericUpDown
-        private void nudNumber_ValueChanged(object sender, EventArgs e)
-        {
-            tboxQuestion.Text = database[(int)nudNumber.Value - 1].text;
-            cboxTrue.Checked = database[(int)nudNumber.Value - 1].trueFalse;
-        }
-        // Обработчик кнопки Добавить
-        private void btnAdd_Click(object sender, EventArgs e)
-        {
-            if (database == null)
-            {
-                MessageBox.Show("Создайте новую базу данных", "Сообщение");
-                return;
+                index++;
+                RightAnswer++;
             }
-            database.Add((database.Count + 1).ToString(), true);
-            nudNumber.Maximum = database.Count;
-            nudNumber.Value = database.Count;
-        }
-        // Обработчик кнопки Удалить
-        private void btnDelete_Click(object sender, EventArgs e)
-        {
-            if (nudNumber.Maximum == 1 || database == null) return;
-            database.Remove((int)nudNumber.Value);
-            nudNumber.Maximum--;
-            if (nudNumber.Value > 1) nudNumber.Value = nudNumber.Value;
-        }
-        // Обработчик пункта меню Save
-        private void miSave_Click(object sender, EventArgs e)
-        {
-            if (database != null) database.Save();
-            else MessageBox.Show("База данных не создана");
-        }
-        // Обработчик пункта меню Open
-        private void miOpen_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog ofd = new OpenFileDialog();
-            if (ofd.ShowDialog() == DialogResult.OK)
-            {
-                database = new TrueFalse(ofd.FileName);
-                database.Load();
-                nudNumber.Minimum = 1;
-                nudNumber.Maximum = database.Count;
-                nudNumber.Value = 1;
-            }
-        }
-        // Обработчик кнопки Сохранить (вопрос)
-        private void btnSaveQuest_Click(object sender, EventArgs e)
-        {
-            database[(int)nudNumber.Value - 1].text = tboxQuestion.Text;
-            database[(int)nudNumber.Value - 1].trueFalse = cboxTrue.Checked;
+            else
+                index++;
+            Following();
         }
 
+        private void Following()
+        {
+            if (database.Count > index)
+            {
+                richTextBox1.Text = database[index].text;
+                Answer = database[index].trueFalse;
+            }
+            else
+            {
+                button1.Enabled = false;
+                button2.Enabled = false;
+                richTextBox1.Text = "";
+                richTextBox1.Enabled = false;
+                MessageBox.Show($"Вы ответили правильно на {RightAnswer} из {database.Count}", "Поздравляю", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+    }
+
+        private void Button2_Click(object sender, EventArgs e)
+        {
+            if (!Answer)
+            {
+                index++;
+                RightAnswer++;
+            }
+            else
+                index++;
+            Following();
+        }
+
+        private void ОПрограммеToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            (new AboutTheProgram()).Show();
+        }
+
+        private void СправкаToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

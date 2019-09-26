@@ -8,39 +8,45 @@ using System.Windows.Forms;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 
-namespace Lesson8_1
+namespace _2_WinBelieveUnbelievers
 {
+    //class QuestionForGame
+    //{
+    //    public string Quest = "";
+    //    public string RightAnswer = "";
+    //}
+
     class Save_Load
     {
-        public static void SaveAsXmlFormat(CityModel obj, string fileName)
+        public static void SaveAsXmlFormat(Question obj, string fileName)
         {
             // Сохранить объект класса Student в файле fileName в формате XML
             // typeof(Student) передает в XmlSerializer данные о классе.
             // Внутри метода Serialize происходит большая работа по постройке
             // графа зависимостей для последующего создания xml-файла.
             // Процесс получения данных о структуре объекта называется рефлексией.
-            XmlSerializer xmlFormat = new XmlSerializer(typeof(CityModel));
+            XmlSerializer xmlFormat = new XmlSerializer(typeof(Question));
             // Создаем файловый поток(проще говоря, создаем файл)
             Stream fStream = new FileStream(fileName, FileMode.Create, FileAccess.Write);
             // В этот поток записываем сериализованные данные(записываем xml-файл)
             xmlFormat.Serialize(fStream, obj);
             fStream.Close();
         }
-        public static CityModel LoadFromXmlFormat(string fileName)
+        public static Question LoadFromXmlFormat(string fileName)
         {
             // Считать объект Student из файла fileName формата XML
-            XmlSerializer xmlFormat = new XmlSerializer(typeof(CityModel));
+            XmlSerializer xmlFormat = new XmlSerializer(typeof(Question));
             Stream fStream = new FileStream(fileName, FileMode.Open, FileAccess.Read);
-            var obj = (xmlFormat.Deserialize(fStream) as CityModel);
+            var obj = (xmlFormat.Deserialize(fStream) as Question);
             fStream.Close();
             return obj;
         }
-        public static void SaveAsXmlCollectionFormat(List<CityModel> obj, string fileName)
+        public static void SaveAsXmlCollectionFormat(List<Question> obj, string fileName)
         {
             Stream fStream = new FileStream(fileName, FileMode.Create, FileAccess.Write); ;
             try
             {
-                XmlSerializer xmlFormat = new XmlSerializer(typeof(List<CityModel>));
+                XmlSerializer xmlFormat = new XmlSerializer(typeof(List<Question>));
                 xmlFormat.Serialize(fStream, obj);
                 fStream.Close();
             }
@@ -51,14 +57,14 @@ namespace Lesson8_1
             }
 
         }
-        public static List<CityModel> LoadFromXmlCollectionFormat(string fileName)
+        public static List<Question> LoadFromXmlCollectionFormat(string fileName)
         {
-            List<CityModel> obj = new List<CityModel>();
+            List<Question> obj = new List<Question>();
             Stream fStream = new FileStream(fileName, FileMode.Open, FileAccess.Read);
             try
             {
-                XmlSerializer xmlFormat = new XmlSerializer(typeof(List<CityModel>));
-                obj = (xmlFormat.Deserialize(fStream) as List<CityModel>);
+                XmlSerializer xmlFormat = new XmlSerializer(typeof(List<Question>));
+                obj = (xmlFormat.Deserialize(fStream) as List<Question>);
                 fStream.Close();
             }
             catch (Exception e)
@@ -81,4 +87,6 @@ namespace Lesson8_1
             xml.Save($"{fileName}.xml");
         }
     }
+
+
 }
