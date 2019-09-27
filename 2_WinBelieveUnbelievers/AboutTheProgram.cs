@@ -24,12 +24,17 @@ namespace _2_WinBelieveUnbelievers
 
         private void AboutTheProgram_Load(object sender, EventArgs e)
         {
-            richTextBox2.Text = "Кузнецов C# Уровень 1. Задание 8.1." + Environment.NewLine +
-                "Используя полученные знания и класс TrueFalse, разработать игру «Верю — не верю»." + Environment.NewLine +
-                "" + Environment.NewLine +
-                "Игра создана учеником Кузнецовым В.В.GeekBrains под предводительством Сергея Камянецкого и непосредственным содействие Антоном Алиевым." + Environment.NewLine +
+            richTextBox2.Text = "Кузнецов C# Уровень 1. Верю - не верю." + Environment.NewLine +
+                //"Используя полученные знания и класс TrueFalse, разработать игру «Верю — не верю»." + Environment.NewLine +
+                //"" + Environment.NewLine +
+                "Программа создана учеником Кузнецовым В.В.GeekBrains под предводительством Сергея Камянецкого и непосредственным содействием Антоном Алиевым." + Environment.NewLine +
                 "" + Environment.NewLine +
                 "Copyright © Все права защищены согласно статье 1271 ГК РФ, а также ГОСТ Р 7.0.1 - 2003."; 
+        }
+
+        private void RichTextBox2_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

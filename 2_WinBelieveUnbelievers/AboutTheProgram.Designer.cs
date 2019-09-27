@@ -52,6 +52,7 @@
             this.richTextBox2.Size = new System.Drawing.Size(355, 121);
             this.richTextBox2.TabIndex = 3;
             this.richTextBox2.Text = "";
+            this.richTextBox2.TextChanged += new System.EventHandler(this.RichTextBox2_TextChanged);
             // 
             // pictureBox2
             // 

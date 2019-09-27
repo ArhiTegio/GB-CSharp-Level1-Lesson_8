@@ -33,29 +33,46 @@ namespace _2_WinBelieveUnbelievers
         {
             set { fileName = value; }
         }
+
         public TrueFalse(string fileName)
         {
             this.fileName = fileName;
             list = new List<Question>();
         }
 
-        public TrueFalse()
-        {
-            list = new List<Question>();
-        }
+        /// <summary>
+        /// Добавить вопрос
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="trueFalse"></param>
         public void Add(string text, bool trueFalse)
         {
             list.Add(new Question(text, trueFalse));
         }
+
+        /// <summary>
+        /// Убрать по индексу
+        /// </summary>
+        /// <param name="index"></param>
         public void Remove(int index)
         {
             if (list != null && index < list.Count && index >= 0) list.RemoveAt(index);
         }
-        // Индексатор - свойство для доступа к закрытому объекту
+
+        /// <summary>
+        /// Индексатор - свойство для доступа к закрытому объекту
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
         public Question this[int index]
         {
             get { return list[index]; }
         }
+
+
+        /// <summary>
+        /// Сохранить вопросы
+        /// </summary>
         public void Save()
         {
             XmlSerializer xmlFormat = new XmlSerializer(typeof(List<Question>));
@@ -63,6 +80,10 @@ namespace _2_WinBelieveUnbelievers
             xmlFormat.Serialize(fStream, list);
             fStream.Close();
         }
+
+        /// <summary>
+        /// Загрузить вопросы
+        /// </summary>
         public void Load()
         {
             XmlSerializer xmlFormat = new XmlSerializer(typeof(List<Question>));
@@ -70,23 +91,24 @@ namespace _2_WinBelieveUnbelievers
             list = (List<Question>)xmlFormat.Deserialize(fStream);
             fStream.Close();
         }
+
+        /// <summary>
+        /// Количество вопросов
+        /// </summary>
         public int Count
         {
             get { return list.Count; }
         }
 
+        /// <summary>
+        /// Перечислитель вопросов
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<Question> GetAllQuestuon()
         {
             foreach (var t in list)            
                 yield return t;
             
-            yield break;
-        }
-
-        public IEnumerable<Tuple<string, bool>> Question()
-        {
-            foreach (var n in list)            
-                yield return Tuple.Create(n.text, n.trueFalse);
             yield break;
         }
     }

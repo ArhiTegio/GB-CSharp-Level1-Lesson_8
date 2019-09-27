@@ -10,14 +10,13 @@ using System.Xml.Serialization;
 
 namespace _2_WinBelieveUnbelievers
 {
-    //class QuestionForGame
-    //{
-    //    public string Quest = "";
-    //    public string RightAnswer = "";
-    //}
-
     class Save_Load
     {
+        /// <summary>
+        /// Сохранить в формат XML
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="fileName"></param>
         public static void SaveAsXmlFormat(Question obj, string fileName)
         {
             // Сохранить объект класса Student в файле fileName в формате XML
@@ -32,6 +31,12 @@ namespace _2_WinBelieveUnbelievers
             xmlFormat.Serialize(fStream, obj);
             fStream.Close();
         }
+
+        /// <summary>
+        /// Загрузить в формат XML
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="fileName"></param>
         public static Question LoadFromXmlFormat(string fileName)
         {
             // Считать объект Student из файла fileName формата XML
@@ -41,6 +46,12 @@ namespace _2_WinBelieveUnbelievers
             fStream.Close();
             return obj;
         }
+
+        /// <summary>
+        /// Сохранить коллекцию в формат XML
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="fileName"></param>
         public static void SaveAsXmlCollectionFormat(List<Question> obj, string fileName)
         {
             Stream fStream = new FileStream(fileName, FileMode.Create, FileAccess.Write); ;
@@ -57,6 +68,12 @@ namespace _2_WinBelieveUnbelievers
             }
 
         }
+
+        /// <summary>
+        ///  Загрузить коллекцию в формат XML
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
         public static List<Question> LoadFromXmlCollectionFormat(string fileName)
         {
             List<Question> obj = new List<Question>();
@@ -75,6 +92,10 @@ namespace _2_WinBelieveUnbelievers
             return obj;
         }
 
+        /// <summary>
+        /// Конвертировать из формата CSV в XML
+        /// </summary>
+        /// <param name="fileName"></param>
         public static void ConvertCSVtoXML(string fileName)
         {
             var lines = File.ReadAllLines(fileName);

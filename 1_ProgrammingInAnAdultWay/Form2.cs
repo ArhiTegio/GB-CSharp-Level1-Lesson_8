@@ -12,6 +12,10 @@ namespace Lesson8_1
 {
     public partial class Form2 : Form
     {
+        /// <summary>
+        /// Заполнение данными
+        /// </summary>
+        /// <param name="model"></param>
         public Form2(CityModel model)
         {
             InitializeComponent();
@@ -34,8 +38,10 @@ namespace Lesson8_1
             dataGridView1.Rows.Add("Город", model.Name);
             dataGridView1.Rows.Add("Максимальная температура", $"{ model.TemperatureMax}°C");
             dataGridView1.Rows.Add("Минимальная температура", $"{ model.TemperatureMin}°C");
-            dataGridView1.Rows.Add("Максимальная давление", $"{ model.PressureMax} мм.рт.ст.");
-            dataGridView1.Rows.Add("Минимальная давление", $"{ model.PressureMin} мм.рт.ст.");
+            dataGridView1.Rows.Add("Максимальное давление", $"{ model.PressureMax} мм.рт.ст.");
+            dataGridView1.Rows.Add("Минимальное давление", $"{ model.PressureMin} мм.рт.ст.");
+            dataGridView1.Rows.Add("Облачность", $"{ model.СloudinessWeather}");
+            dataGridView1.Rows.Add("Осадки", $"{ model.PrecipitationWeather}");
         }
 
         private void Form2_Load(object sender, EventArgs e)
@@ -43,6 +49,11 @@ namespace Lesson8_1
 
         }
 
+        /// <summary>
+        /// Выход из программы
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Button1_Click(object sender, EventArgs e)
         {
             Close();

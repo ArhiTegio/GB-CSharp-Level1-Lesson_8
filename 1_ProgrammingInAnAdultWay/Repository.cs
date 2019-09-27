@@ -7,6 +7,7 @@ using System.Xml.Linq;
 using System.Windows.Forms;
 using System.IO;
 using System.Net;
+using System.Web;
 
 namespace Lesson8_1
 {
@@ -27,8 +28,13 @@ namespace Lesson8_1
     class Repository
     {
 
-
-        static public void LoadData(ListBox ListBoxCitys, string PathDbOrUrl = "weather.xml", bool flag=true)
+        /// <summary>
+        /// Загрузить данные
+        /// </summary>
+        /// <param name="ListBoxCitys">Передать ссылку на ListBox куда будут загружены данные</param>
+        /// <param name="PathDbOrUrl">Передать ссылку на БД или интернет ссылку</param>
+        /// <param name="flag">Флаг устанавливающий каким образом будут взяты данные. При true прочитает из файла. При false возьмет данные из файла</param>
+        static public void LoadData(ListBox ListBoxCitys, string nameCity, string PathDbOrUrl = "weather.xml", bool flag=true)
         {
             List<CityModel> temp = new List<CityModel>();
 
@@ -45,13 +51,14 @@ namespace Lesson8_1
                   .Descendants("REPORT")
                   .Descendants("TOWN")
                   .Descendants("FORECAST").ToArray();
-
+                ListBoxCitys.Items.Clear();
                 foreach (var item in db)
                 {
-                    //Console.WriteLine(item);
+                    
 
-                    temp.Add(new CityModel(
-                        Name: "Город 1",
+                    ListBoxCitys.Items.Add(new CityModel(
+                        //Name: HttpUtility.UrlDecode(item.Parent.Attribute("sname").Value, Encoding.UTF8), //Проблема в названиях городов у сайта. Не всегда необходимые подставляет.
+                        Name: nameCity,
                         TemperatureMin: Convert.ToInt32(item.Element("TEMPERATURE").Attribute("min").Value),
                         TemperatureMax: Convert.ToInt32(item.Element("TEMPERATURE").Attribute("max").Value),
                         PressureMax: Convert.ToInt32(item.Element("PRESSURE").Attribute("max").Value),
@@ -63,21 +70,17 @@ namespace Lesson8_1
                             hour: Convert.ToInt32(item.Attribute("hour").Value),
                             minute: 0,
                             second: 0
-                            )
+                            ),
+                        СloudinessWeather: (Сloudiness)Convert.ToInt32(item.Element("PHENOMENA").Attribute("cloudiness").Value),
+                        PrecipitationWeather: (Precipitation)Convert.ToInt32(item.Element("PHENOMENA").Attribute("precipitation").Value)
                         ));
                     //Console.WriteLine("\n ---- \n");
-                }
-
-                foreach (var e in temp)                
-                    ListBoxCitys.Items.Add(e);                
+                }           
             }
             catch (Exception f)
             {
-
                 MessageBox.Show($"Ошибка чтения файла {f.Message} " + Environment.NewLine + f.StackTrace + Environment.NewLine + f.InnerException, "Произошла ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-
-            //Console.WriteLine(xmlFile);
         }
     }
 }

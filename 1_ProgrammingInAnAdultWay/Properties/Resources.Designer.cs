@@ -73,6 +73,16 @@ namespace Lesson8_1.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap refresh_button {
+            get {
+                object obj = ResourceManager.GetObject("refresh-button", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap sunny {
             get {
                 object obj = ResourceManager.GetObject("sunny", resourceCulture);
